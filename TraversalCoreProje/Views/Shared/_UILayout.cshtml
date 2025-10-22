@@ -3,16 +3,20 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
+<!doctype html>
+<html lang="zxx">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>_UILayout</title>
-</head>
+    @await Html.PartialAsync("~/Views/LayoutPartial/_HeadPartial.cshtml")
+
 <body>
-    <div class="container">
-		@RenderBody()
-    </div>
+
+    @await Html.PartialAsync("~/Views/LayoutPartial/_HeaderPartial.cshtml")
+
+    @RenderBody()
+
+    @await Html.PartialAsync("~/Views/LayoutPartial/_FooterPartial.cshtml")
+
+    @await Html.PartialAsync("~/Views/LayoutPartial/_ScriptPartial.cshtml")
+
 </body>
 </html>
