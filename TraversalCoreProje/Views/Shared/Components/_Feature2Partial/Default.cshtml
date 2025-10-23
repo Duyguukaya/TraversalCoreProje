@@ -1,0 +1,30 @@
+﻿@using EntityLayer.Concrete
+@model List<Feature2>
+@*
+	_Feature2Partial
+*@
+
+<div class="maghny-gd-1 col-lg-6 mt-lg-0 mt-4">
+    <div class="row">
+        @{
+            for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <div class="maghny-gd-1 col-6 @(i >= 2 ? "mt-4" : "")">
+                    <div class="maghny-grid">
+                        <figure class="effect-lily border-radius">
+                            <img class="img-fluid" src="@item.Image" alt="@item.Image" />
+
+                            <figcaption>
+                                <div>
+                                    <h4>@item.Name</h4>
+                                    <p>Başlayan fiyatlarla @item.Description$ </p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
