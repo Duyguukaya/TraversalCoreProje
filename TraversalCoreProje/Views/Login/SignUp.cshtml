@@ -1,6 +1,9 @@
-﻿@{
+﻿@model UserRegisterViewModel
+@{
 	Layout = null;
 }
+
+
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +13,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" href="~/colorlib-regform-26/fonts/linearicons/style.css">
-
 	<link rel="stylesheet" href="~/colorlib-regform-26/css/style.css">
 </head>
 
@@ -21,40 +23,61 @@
 			<img src="~/colorlib-regform-26/images/image-1.png" alt="" class="image-1">
 			<form method="post">
 				<h3>Yeni Hesap Oluşturun</h3>
+
 				<div class="form-holder">
 					<span class="lnr lnr-user"></span>
-					<input type="text" class="form-control" placeholder="Adınız" name="Name">
+					<input type="text" class="form-control" placeholder="Adınız" asp-for="Name">
 				</div>
+				<span asp-validation-for="Name" class="text-danger"></span>
+
 				<div class="form-holder">
 					<span class="lnr lnr-smile"></span>
-					<input type="text" class="form-control" placeholder="Soyadınız" name="Surname">
+					<input type="text" class="form-control" placeholder="Soyadınız" asp-for="Surname">
 				</div>
+				<span asp-validation-for="Surname" class="text-danger"></span>
+
 				<div class="form-holder">
 					<span class="lnr lnr-envelope"></span>
-					<input type="text" class="form-control" placeholder="Mail Adresiniz" name="Mail">
+					<input type="text" class="form-control" placeholder="Mail Adresiniz" asp-for="Mail">
 				</div>
+				<span asp-validation-for="Mail" class="text-danger"></span>
+
 				<div class="form-holder">
 					<span class="lnr lnr-users"></span>
-					<input type="text" class="form-control" placeholder="Kullanıcı Adı"name="Username">
+					<input type="text" class="form-control" placeholder="Kullanıcı Adı" asp-for="Username">
 				</div>
+				<span asp-validation-for="Username" class="text-danger"></span>
+
 				<div class="form-holder">
 					<span class="lnr lnr-lock"></span>
-					<input type="password" class="form-control" placeholder="Şifreniz" name="Password">
+					<input type="password" class="form-control" placeholder="Şifreniz" asp-for="Password">
 				</div>
+				<span asp-validation-for="Password" class="text-danger"></span>
+
 				<div class="form-holder">
 					<span class="lnr lnr-sync"></span>
-					<input type="password" class="form-control" placeholder="Şifre Tekrar" name="ConfirmPassword">
+					<input type="password" class="form-control" placeholder="Şifre Tekrar" asp-for="ConfirmPassword">
+				</div>
+				<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+				<div class="text-danger" asp-validation-summary="ModelOnly">
 				</div>
 				<button>
 					<span>Kayıt Ol</span>
-				</button>				
+				</button>
 			</form>
 			<img src="~/colorlib-regform-26/images/image-2.png" alt="" class="image-2">
 		</div>
 
 	</div>
 
-	<script src="~/colorlib-regform-26/js/jquery-3.3.1.min.js"></script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
 	<script src="~/colorlib-regform-26/js/main.js"></script>
+	<script src="~/colorlib-regform-26/js/jquery-3.3.1.min.js"></script>
+
 </body>
 </html>
+
+

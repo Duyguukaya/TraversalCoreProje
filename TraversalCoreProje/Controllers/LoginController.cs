@@ -19,7 +19,7 @@ namespace TraversalCoreProje.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
-            return View();
+            return View(new UserRegisterViewModel());
         }
 
         [HttpPost]
