@@ -1,0 +1,36 @@
+﻿@model TraversalCoreProje.Areas.Member.Models.UserEditViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Profil Düzenleme Sayfası</h2>
+
+<form method="post" class="form-group" enctype="multipart/form-data">
+    @Html.Label("Adınız")
+    <input type="text" asp-for="Name" class="form-control" />
+	<br />
+    @Html.Label("Soyadınız")
+    <input type="text" asp-for="Surname" class="form-control" />
+    <br />
+	@Html.Label("Mail Adresiniz")
+    <input type="text" asp-for="Mail" class="form-control" />
+	<br />
+    @Html.Label("Telefon Numarası")
+    <input type="text" asp-for="Phonenumber" class="form-control" />
+	<br />
+    @Html.Label("Şifreniz")
+    <input type="text" asp-for="Password" class="form-control" />
+	<br />
+    @Html.Label("Şifre Tekrar")
+    <input type="text" asp-for="Confirmpassword" class="form-control" />
+	<br />
+    <div class="form-group">
+        @Html.Label("Profil Resmi Seçin")<br />
+		<input type="file" asp-for="Image" class="form-control-file" />
+    </div>
+	<button type="submit" class="btn btn-primary">Bilgileri Güncelle</button>
+
+</form>
+
+
