@@ -1,0 +1,61 @@
+﻿@model EntityLayer.Concrete.Reservation
+
+@{
+    ViewData["Title"] = "NewReservation";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Yeni Rezervasyon Sayfası</h2>
+
+<form method="post">
+    <div class="form-group">
+        @Html.Label("Lokasyon")
+        @Html.DropDownListFor(x => x.Destination, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Kişi Sayısı")
+        <input type="text" asp-for="PersonCount" class="form-control" />
+    </div>
+    <div class="form-group">
+        @Html.Label("Tarih")
+        <input type="date" asp-for="ReservationDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        @Html.Label("Varsa Eklemek İstedikleriniz")
+        <textarea asp-for="Description" rows="3" class="form-control"></textarea>
+    </div>
+	<button class="btn btn-success">Rezervasyon Yap</button>
+
+</form>
+
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">Önemli Bilgilendirme</h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <p>Rezervasyonunuzu oluştururken lütfen tüm alanları eksiksiz doldurduğunuzdan emin olun.</p>
+                <p>Tarih seçimleriniz, turlarımızın müsaitlik durumuna göre ayrıca onaylanacaktır.</p>
+                <p>Rezervasyon onay süreci ile ilgili lütfen güncel rezervasyonlarım menüsü üzerinden rezervasyonunuzu kontrol edin.</p>
+                <p>İyi tatiller dileriz!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Anladım, Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        // Bu kod, sayfa tamamen yüklendikten sonra çalışır
+        $(document).ready(function () {
+            // ID'si "infoModal" olan modal'ı (popup'ı) gösterir
+            $('#infoModal').modal('show');
+        });
+    </script>
+}
