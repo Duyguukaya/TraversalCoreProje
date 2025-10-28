@@ -1,4 +1,6 @@
-﻿namespace BusinessLayer.Abstract
+﻿using System.Linq.Expressions;
+
+namespace BusinessLayer.Abstract
 {
     public interface IGenericService<T>
     {
@@ -7,6 +9,7 @@
         void TUpdate(T t);
         List<T> TGetList();
         T TGetById(int id);
+        //List<T> GetByFilter(Expression<Func<T, bool>> filter); 
 
     }
 }
