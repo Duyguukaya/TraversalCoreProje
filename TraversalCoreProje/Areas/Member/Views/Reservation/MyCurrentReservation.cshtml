@@ -8,6 +8,7 @@
 
 <h2>Aktif Rezervasyonlar</h2>
 
+@if(Model!=null && Model.Any()){
 <table class="table table-bordered table-hover">
     <tr>
         <th>#</th>
@@ -26,8 +27,14 @@
             <td>@item.Status</td>
         </tr>
     }
-</table>
+    </table>
 
-
+}
+else
+{
+    <div class="alert alert-warning">
+        Henüz aktif bir rezervasyonunuz bulunmamaktadır.
+    </div>
+}
 
 

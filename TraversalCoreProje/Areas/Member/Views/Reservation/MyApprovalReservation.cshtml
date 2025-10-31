@@ -7,24 +7,31 @@
 
 <h2>Onay Bekleyen Rezervasyonlarım</h2>
 
-
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>#</th>
-        <th>Lokasyon</th>
-        <th>Kişi Sayısı</th>
-        <th>Rezervasyon Tarihi</th>
-        <th>Durum</th>
-    </tr>
-    @foreach(var item in Model)
-    {
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-hover">
         <tr>
-            <td>@item.ReservationId</td>
-            <td>@item.Destination.City</td>
-            <td>@item.PersonCount</td>
-            <td>@item.ReservationDate</td>
-            <td>@item.Status</td>
+            <th>#</th>
+            <th>Lokasyon</th>
+            <th>Kişi Sayısı</th>
+            <th>Rezervasyon Tarihi</th>
+            <th>Durum</th>
         </tr>
-    }
-</table>
-
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ReservationId</td>
+                <td>@item.Destination.City</td>
+                <td>@item.PersonCount</td>
+                <td>@item.ReservationDate</td>
+                <td>@item.Status</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        Henüz onay bekleyen bir rezervasyonunuz bulunmamaktadır.
+    </div>
+}
