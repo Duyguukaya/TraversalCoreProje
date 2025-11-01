@@ -25,15 +25,9 @@
                     <div class="mt-auto d-flex justify-content-between align-items-center">
                         <span class="fs-5 fw-bold text-primary">@item.Price $</span>
                         <a href="/Destination/DestinationDetails/@item.DestinationId"
-                           class="btn btn-primary btn-sm">Sitede Gör</a>
+                           class="btn btn-outline-success btn-sm">Sitede Gör</a>
                     </div>
                     <div class="mt-2 d-flex justify-content-end gap-2">
-
-                        <a href="/Admin/Destination/AddDestination"
-                           class="btn btn-outline-success btn-sm"
-                           title="Ekle">
-                            <i class="bi bi-plus"></i>
-                        </a>
 
                         <a href="/Admin/Destination/UpdateDestination/@item.DestinationId"
                            class="btn btn-outline-warning btn-sm"
@@ -51,6 +45,13 @@
             </div>
         </div>
     }
+    <div class="d-flex justify-content-center">
+        <a href="/Admin/Destination/AddDestination"
+           class="btn btn-primary"
+           title="Ekle">
+            <i class="bi bi-plus"></i> Yeni Rota Ekle
+        </a>
+    </div>
 </div>
 
 
