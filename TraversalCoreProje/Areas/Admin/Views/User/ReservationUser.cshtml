@@ -1,0 +1,46 @@
+﻿@using EntityLayer.Concrete
+@model List<Reservation>
+@{
+    ViewData["Title"] = "ReservationUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    int count = 0;
+}
+
+<h2>Kullanıcının Geçmiş Rezervasyonları</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>#</th>
+            <th>Misafir Ad Soyad</th>
+            <th>Rota</th>
+            <th>Kişi Sayısı</th>
+            <th>Rezervasyon Tarihi</th>
+            <th>İşlemler</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            count++;
+            <tr>
+                <td>@count</td>
+                <td>###</td>
+@*                 <td>@item.AppUser.Name @item.AppUser.Surname</td>
+ *@                <td>@item.Destination.City</td>
+                <td>@item.PersonCount</td>
+                <td>@(((DateTime)item.ReservationDate).ToString("dd-MMM-yyyy"))</td>
+                <td><a href="#" class="btn btn-outline-info">Detay</a></td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        Henüz geçmiş bir rezervasyonunuz bulunmamaktadır.
+    </div>
+}
+
+
