@@ -6,6 +6,7 @@ using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using TraversalCoreProje.Models;
 
@@ -45,6 +46,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error404","?code={0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
