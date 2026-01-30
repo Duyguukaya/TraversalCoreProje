@@ -18,16 +18,19 @@
                     <div class="mb-3">
                         <label asp-for="Name" class="form-label">Ad Soyad</label>
                         <input type="text" asp-for="Name" class="form-control" />
+						<span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Descrption" class="form-label">Açıklama</label>
                         <input type="text" asp-for="Descrption" class="form-control" />
+						<span asp-validation-for="Descrption" class="text-danger"></span>
                     </div>
 
                     <div class="row">
                         <div class="mb-3">
                             <label asp-for="Image" class="form-label">Görsel</label>
                             <input type="text" asp-for="Image" class="form-control" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
                
                         <div class="mb-3">
