@@ -1,0 +1,58 @@
+﻿@model EntityLayer.Concrete.Guide
+@{
+    ViewData["Title"] = "EditGuide";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3>Rehber Güncelleme Sayfası</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <input type="hidden" asp-for="GuideId" />
+                        <label asp-for="Name" class="form-label">Ad Soyad</label>
+                        <input type="text" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Descrption" class="form-label">Açıklama</label>
+                        <input type="text" asp-for="Descrption" class="form-control" />
+                        <span asp-validation-for="Descrption" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3">
+                            <label asp-for="Image" class="form-label">Görsel</label>
+                            <input type="text" asp-for="Image" class="form-control" />
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="InstagramUrl" class="form-label">Insatagram Url</label>
+                            <input type="text" asp-for="InstagramUrl" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="TwitterUrl" class="form-label">Twitter Url</label>
+                            <input type="text" asp-for="TwitterUrl" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+
+            </div> <hr />
+
+            <div class="text-end">
+                <button class="btn btn-primary">Güncelle</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
