@@ -1,4 +1,4 @@
-﻿@model List<AnnouncementListViewModel>
+﻿@model List<AnnouncementListDTO>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -12,7 +12,8 @@
         <th>#</th>
         <th>Duyuru Başlığı</th>
         <th>İçerik</th>
-        <th>Detaylar</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
     </tr>
     @foreach(var item in Model)
     {
@@ -21,8 +22,11 @@
             <td>@count</td>
             <td>@item.Title</td>
             <td>@item.Content</td>
-            <td><a href="#" class="btn btn-outline-dark">Detaylar</a></td>
+            <td><a href="/Admin/Announcement/DeleteAnnouncement/@item.AnnouncementId" class="btn btn-outline-danger">Sil</a></td>
+            <td><a href="/Admin/Announcement/UpdateAnnouncement/@item.AnnouncementId" class="btn btn-outline-dark">Güncelle</a></td>
         </tr>
     }
 </table>
+
+<a href="/Admin/Announcement/AddAnnouncement" class="btn btn-outline-info">Yeni Duyuru Ekle</a>
 
