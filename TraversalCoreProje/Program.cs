@@ -1,6 +1,10 @@
 using BusinessLayer.Container;
+using BusinessLayer.ValidationRule;
 using DataAccessLayer.Concrete;
+using DTOLayer.DTOs.AnnouncementDTOs;
 using EntityLayer.Concrete;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using TraversalCoreProje.Models;
@@ -21,7 +25,11 @@ builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<Context
 
 builder.Services.ContainerDependences();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddTransient<IValidator<AnnouncementAddDTO>,AnnouncementValidator>();
+
+builder.Services.AddControllersWithViews().AddFluentValidation();
 
 
 builder.Services.AddMvc(config =>
