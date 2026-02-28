@@ -4,27 +4,86 @@
 }
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<h2>Şehir - Ülke İşlemleri</h2>
-<br />
 
-<button type="button" id="btngetlist" class="btn btn-outline-info">Şehir Listesi</button>
+<div class="container-fluid p-4">
+	<h2 class="mb-4 text-primary"><i class="fas fa-city"></i> Şehir - Ülke İşlemleri</h2>
 
-<button type="button" id="btngetbyid" class="btn btn-outline-primary">Şehir Getir</button>
+	<div class="card border-0 shadow-sm mb-4">
+		<div class="card-body bg-light rounded">
+			<div class="d-flex flex-wrap gap-2">
+				<button type="button" id="btngetlist" class="btn btn-outline-info shadow-sm">Şehir Listesi</button>
+				<button type="button" id="btngetbyid" class="btn btn-outline-primary shadow-sm">Şehir Getir</button>
+				<button type="button" id="btnaddcity" class="btn btn-outline-warning shadow-sm">Şehir Ekle</button>
+				<button type="button" id="btnupdatecity" class="btn btn-outline-success shadow-sm">Şehir Güncelle</button>
+				<button type="button" id="btndeletecity" class="btn btn-outline-danger shadow-sm">Şehir Sil</button>
+			</div>
+		</div>
+	</div>
 
-<button type="button" id="btnaddcity" class="btn btn-outline-warning">Şehir Ekle</button>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="card border-info mb-4 shadow-sm">
+				<div class="card-header bg-info text-white font-weight-bold">Şehir Listesi</div>
+				<div class="card-body" id="citylist" style="max-height: 400px; overflow-y: auto;">
+					<span class="text-muted">Buraya şehir bilgisi gelecek...</span>
+				</div>
+			</div>
 
-<button type="button" id="btnupdatecity" class="btn btn-outline-success">Şehir Güncelle</button>
+			<div class="card border-primary mb-4 shadow-sm">
+				<div class="card-header bg-primary text-white font-weight-bold">ID ile Şehir Getir</div>
+				<div class="card-body">
+					<input type="text" id="txtid" placeholder="Sorgulanacak şehir ID değerini giriniz" class="form-control mb-3" />
+					<div id="destinationlistbyid">
+					</div>
+				</div>
+			</div>
+		</div>
 
-<button type="button" id="btndeletecity" class="btn btn-outline-danger">Şehir Sil</button>
+		<div class="col-lg-6">
+			<div class="card border-warning mb-4 shadow-sm">
+				<div class="card-header bg-warning text-dark font-weight-bold">Yeni Şehir Ekle</div>
+				<div class="card-body">
+					<input type="text" id="txtcity" placeholder="Şehir adını giriniz" class="form-control mb-2" />
+					<input type="text" id="txtdaynight" placeholder="Gün - gece sayısını girin" class="form-control mb-2" />
+					<input type="text" id="txtprice" placeholder="Fiyatı giriniz" class="form-control mb-2" />
+					<input type="text" id="txtcapacity" placeholder="Katılacak kişi sayısını giriniz" class="form-control" />
+				</div>
+			</div>
 
-<br />
-<br />
+			<div class="card border-success mb-4 shadow-sm">
+				<div class="card-header bg-success text-white font-weight-bold">Şehir Güncelle</div>
+				<div class="card-body text-center">
+					<input type="text" id="txteditid" placeholder="Güncellenecek ID değerini giriniz" class="form-control mb-2" />
+					<input type="text" id="txtcityname" placeholder="Yeni şehir adı" class="form-control mb-2" />
+					<input type="text" id="txtdaynightname" placeholder="Yeni gün gece sayısı" class="form-control" />
+				</div>
+			</div>
 
-<div id="citylist">
-
-	buraya şehir bilgisi gelecek
-
+			<div class="card border-danger mb-4 shadow-sm">
+				<div class="card-header bg-danger text-white font-weight-bold">Şehir Sil</div>
+				<div class="card-body">
+					<input type="text" id="txtcityid" placeholder="Silinecek ID değerini giriniz" class="form-control" />
+					<small class="text-danger mt-2 d-block">* Bu işlem geri alınamaz.</small>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+<style>
+
+	.card {
+		transition: transform 0.2s;
+	}
+
+		.card:hover {
+			transform: translateY(-3px);
+		}
+
+	.gap-2 {
+		gap: 0.5rem !important;
+	}
+</style>
 
 
 <script>
@@ -37,14 +96,97 @@
 			success: function(func){
 				let w = jQuery.parseJSON(func);
 				console.log(w);
-				let tablehtml= "<table class = table table-bordered> <tr><th> Şehir ID </th><th> Şehir Adı </th><th> Ülke Adı </th></tr>";
+				let tablehtml= "<table class = table table-bordered> <tr><th> Şehir Adı </th><th> Gün-Gece </th><th> Fiyatı </th></tr>";
 				$.each(w, (index, value)=>{
-				  tablehtml+=`<tr> <td>${value.CityId}</td> <td>${value.CityName}</td> <td>${value.CityCountry}</td> </tr>`
+				  tablehtml+=`<tr> <td>${value.City}</td> <td>${value.DayNight}</td> <td>${value.Price} ₺ </td> </tr>`
 				});
 				tablehtml+= "</table>";
 				$("#citylist").html(tablehtml);
 			}
 
+		});
+	});
+
+	$("#btnaddcity").click(function(){
+		let cityvalues = {
+			City: $("#txtcity").val(),
+			DayNight: $("#txtdaynight").val(),
+			Price: $("#txtprice").val(),
+			Capacity: $("#txtcapacity").val()
+		};
+
+		$.ajax({
+			type: "POST",
+			url: "/Admin/City/AddCityDestination/",
+			data: cityvalues,
+			success: function(func){
+				alert("Şehir - Rota başarılı bir şekilde eklendi");
+			},
+			error: function(xhr, status, error) {
+
+		console.log("Hata Detayı: " + xhr.responseText);
+		alert("Bir hata oluştu! Konsolu kontrol edin.");
+	}
+		});
+	});
+
+	$("#btngetbyid").click(x=>{
+		let id=$("#txtid").val();
+
+		$.ajax({
+			contentType: "application/json",
+			dataType: "json",
+			type: "GET",
+			url: "/Admin/City/GetById/",
+			data:{DestinationId:id},
+			success:function(func2){
+				if (!func2 || func2 == null || func2 == "" || func2 == "null") {
+		let htmlstr = `<table class="table table-bordered">
+			<tr><th>Şehir Adı</th><th>Gün-Gece</th><th>Fiyat</th></tr>
+			<tr><td colspan="3" class="text-center" style="color:red">Bu ID'li bir rotasyon bulunamadı</td></tr>
+		</table>`;
+		$("#destinationlistbyid").html(htmlstr);
+	}
+				else{
+			let result=jQuery.parseJSON(func2);
+			console.log(result);
+			let htmlstr=`<table class=table table-bordered> <tr><th>Şehir Adı</th><th>Gün-Gece</th><th>Fiyat</th></tr>
+			<tr>
+			<td>${result.City}</td><td>${result.DayNight}</td><td>${result.Capacity}</td></tr></table>`;
+			$("#destinationlistbyid").html(htmlstr);
+			}
+			}
+		});
+	});
+
+	$("#btndeletecity").click(x=>{
+		let id=$("#txtcityid").val();
+		$.ajax({
+			url:"/Admin/City/DeleteCity/" + id,
+			type:"POST",
+			contentType:"application/json",
+			dataType:"json",
+			success:function(fun3){
+				loadData();
+			}
+		});
+	});
+
+	$("#btnupdatecity").click(function(){
+		let values ={
+			DestinationId:$("#txteditid").val(),
+			City:$("#txtcityname").val(),
+			DayNight:$("#txtdaynightname").val()
+		};
+
+		$.ajax({
+			type:"POST",
+			url:"/Admin/City/UpdateCity/",
+			data:values,
+			success:function(func4){
+				alert("Güncelleme işlemi başarılı bir şekilde gerçekleşti");
+				loadData();
+			}
 		});
 	});
 </script>
