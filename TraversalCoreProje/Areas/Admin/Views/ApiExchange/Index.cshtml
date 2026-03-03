@@ -1,0 +1,72 @@
+﻿@model IEnumerable<BookingExchangeViewModel2.Exchange_Rates>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .currency-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+    }
+
+    .currency-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f1f1f1;
+        transition: background 0.2s ease;
+    }
+
+    .currency-row:last-child {
+        border-bottom: none;
+    }
+
+    .currency-row:hover {
+        background-color: #fafafa; 
+    }
+
+    .currency-code {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #333;
+        letter-spacing: 0.5px;
+    }
+
+    .currency-value {
+        font-family: 'Inter', -apple-system, sans-serif;
+        font-weight: 500;
+        font-size: 1.2rem;
+        color: #1a1a1a;
+    }
+
+    .page-header {
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+</style>
+
+<div class="container">
+    <div class="currency-container shadow-sm border">
+        <h4 class="page-header text-uppercase small text-muted mb-4">Döviz Kurları</h4>
+        
+        @foreach (var item in Model)
+        {
+            <div class="currency-row">
+                <div class="d-flex align-items-center">
+                    <span class="me-3" style="color: #007bff;">●</span>
+                    <span class="currency-code text-uppercase">@item.currency</span>
+                </div>
+                <div class="currency-value">
+                    @item.exchange_rate_buy <small class="text-muted ms-1">TRY</small>
+                </div>
+            </div>
+        }
+    </div>
+</div>
