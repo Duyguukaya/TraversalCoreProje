@@ -6,9 +6,12 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using TraversalCoreProje.Models;
-using BusinessLayer.ValidationRule.AnnouncementValidationRules; // Validator'ýn bulunduðu klasör
+using BusinessLayer.ValidationRule.AnnouncementValidationRules;
+using TraversalCoreProje.CQRS.Handlers.DestinationHandlers; // Validator'ýn bulunduðu klasör
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<GetAllDestinationQueryHandler>();
 
 builder.Services.AddLogging(x =>
 {

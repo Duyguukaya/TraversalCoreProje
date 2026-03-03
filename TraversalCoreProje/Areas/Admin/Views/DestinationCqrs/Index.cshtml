@@ -1,0 +1,35 @@
+﻿@model List<GetAllDestinationQueryResult>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var count = 0;
+}
+
+<h3>CQRS Tur Verileri</h3>
+
+<table class="table table-bordered">
+  <tr>
+      <th>#</th>
+      <th>Şehir</th>
+      <th>Gün-Gece</th>
+      <th>Fiyat</th>
+      <th>Kapasite</th>
+      <th>Sil</th>
+      <th>Güncelle</th>
+  </tr>
+    @foreach(var item in Model)
+    {
+		count++;
+        <tr>
+            <td>@count</td>
+            <td>@item.City</td>
+            <td>@item.DayNight</td>
+            <td>@item.Price</td>
+            <td>@item.Capacity</td>
+            <td><a href="#" class="btn btn-danger">Sil</a></td>
+            <td><a href="#" class="btn btn-info">Güncelle</a></td>
+        </tr>
+    }
+</table>
+
+<a href="#" class="btn btn-primary">Yeni Tur Ekle</a>
