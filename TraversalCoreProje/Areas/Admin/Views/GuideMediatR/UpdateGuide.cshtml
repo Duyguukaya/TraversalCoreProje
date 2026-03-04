@@ -1,0 +1,20 @@
+﻿@model GetGuideByIdQueryResult
+@{
+    ViewData["Title"] = "UpdateGuide";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h3>CQRS MediatR Rehber Güncelleme Sayfası</h3>
+
+<form method="post">
+    <input type="hidden" asp-for="GuideId" class="form-control" />
+    <label>Rehber Adı</label>
+    <input type="text" asp-for="Name" class="form-control" />
+    <br />
+    <label>Açıklama</label>
+    <input type="text" asp-for="Descrption" class="form-control" />
+    <br />
+    <button class="btn btn-outline-primary">Güncelle</button>
+</form>
+
