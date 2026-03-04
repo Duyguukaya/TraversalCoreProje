@@ -12,6 +12,10 @@ using TraversalCoreProje.CQRS.Handlers.DestinationHandlers; // Validator'ýn bulu
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<GetAllDestinationQueryHandler>();
+builder.Services.AddScoped<GetDestinationByIdQueryHandler>();
+builder.Services.AddScoped<CreateDestinationCommandHandler>();
+builder.Services.AddScoped<RemoveDestinationCommandHandler>();
+builder.Services.AddScoped<UpdateDestinationCommandHandler>();
 
 builder.Services.AddLogging(x =>
 {
