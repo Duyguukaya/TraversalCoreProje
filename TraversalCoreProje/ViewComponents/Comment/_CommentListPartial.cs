@@ -11,7 +11,7 @@ namespace TraversalCoreProje.ViewComponents.Comment
         public IViewComponentResult Invoke(int id)
         {
             using var c = new Context();
-            var values = commentManager.TGetDestinationByID(id);
+            var values = commentManager.TGetListCommentWithDestinationAndUser(id);
             ViewBag.v1 = c.Comments.Where(x => x.DestinationId == id).Count();
             return View(values);
         }
