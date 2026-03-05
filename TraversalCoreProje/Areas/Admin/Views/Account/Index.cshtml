@@ -1,0 +1,49 @@
+﻿@model AccountViewModel
+@{
+    ViewData["Title"] = "Prim Transferi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow-sm border-0 rounded-3">
+
+                <div class="card-header bg-warning text-dark text-center py-3">
+                    <h4 class="mb-0 fw-bold">
+                        <i class="bi bi-arrow-left-right me-2"></i> Personel Prim Transferi
+                    </h4>
+                </div>
+
+                <div class="card-body p-4 bg-light">
+                    <p class="text-muted text-center mb-4">Lütfen transfer yapılacak personel ID'lerini ve tutarı girin.</p>
+
+                    <form method="post">
+
+                        <div class="form-floating mb-3">
+                            <input type="text" asp-for="SenderId" class="form-control shadow-none" id="senderInput" placeholder="Gönderen ID" />
+                            <label for="senderInput"><i class="bi bi-person-up text-secondary me-1"></i> Gönderen ID</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" asp-for="ReciverId" class="form-control shadow-none" id="receiverInput" placeholder="Alıcı ID" />
+                            <label for="receiverInput"><i class="bi bi-person-down text-secondary me-1"></i> Alıcı ID</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input type="number" asp-for="Amount" class="form-control shadow-none" id="amountInput" placeholder="Miktar" />
+                            <label for="amountInput"><i class="bi bi-cash-stack text-secondary me-1"></i> Miktar</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold shadow-sm">
+                            <i class="bi bi-check-circle me-1"></i> Hesaba Aktar
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
