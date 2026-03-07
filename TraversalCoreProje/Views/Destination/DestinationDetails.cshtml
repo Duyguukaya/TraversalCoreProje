@@ -31,11 +31,11 @@
                 </div>
                 <div class="blog-post-info">
                     <div class="author align-items-center mb-1">
-                        <a href="#">@Model.Guide.Name</a> in <a href="#url">Traversal</a>
+                        <a href="#">@Model.Guide.Name</a>  <a href="#url">@Model.Guide.Descrption</a>
                     </div>
                     <ul class="blog-meta">
                         <li class="meta-item blog-lesson">
-                            <span class="meta-value"> @Model.Date </span>
+                            <span class="meta-value"> @(Model.Date.HasValue? Model.Date.Value.ToString("dd MMMM yyyy") : "Tarih Belirtilmemiş") </span>
                         </li>
                     </ul>
                 </div>
@@ -94,7 +94,6 @@
                     </div>
 
 
-                    @await Component.InvokeAsync("_GuideDetails")
 
                     @await Component.InvokeAsync("_CommentListPartial", new{id=ViewBag.i})
 
