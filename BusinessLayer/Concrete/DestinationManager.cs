@@ -30,6 +30,11 @@ namespace BusinessLayer.Concrete
            return _destinationDal.GetById(id);
         }
 
+        public List<Destination> TGetDestinationsWithGuide(int id)
+        {
+            return _destinationDal.GetDestinationsWithGuide(id);
+        }
+
         public List<Destination> TGetList()
         {
             return _destinationDal.GetList();

@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TraversalCoreProje.Controllers
@@ -8,6 +9,7 @@ namespace TraversalCoreProje.Controllers
     public class CommentController : Controller
     {
         CommentManager commentManager = new CommentManager(new EfCommentDal());
+  
 
         [HttpGet]
         public PartialViewResult AddComment()

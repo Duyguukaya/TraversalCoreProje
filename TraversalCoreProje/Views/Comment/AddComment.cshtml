@@ -1,4 +1,6 @@
-﻿<div class="leave-comment-form mt-5" id="reply">
+﻿@if(User.Identity.IsAuthenticated)
+{
+<div class="leave-comment-form mt-5" id="reply">
     <h4 class="side-title mb-2">Bir Yorum Bırakın</h4>
     <p class="mb-4">
         İşaretli alanları doldurmanız gerekmektedir *
@@ -13,17 +15,18 @@
         </div>
 
         <div class="input-grids row">
-            <div class="form-group col-lg-12">
-                <input type="text" name="CommentUser" class="form-control" placeholder="Adınız Soyadınız*"
-                       required="">
-            </div>
-
             <input type="hidden" name="DestinationID" value="@Model.DestinationId" />
 
+            <input type="hidden" name="AppUserID" value="@ViewBag.userId" />
         </div>
 
         <div class="submit text-right">
             <button class="btn btn-style btn-primary">Yorum Yap </button>
         </div>
     </form>
-</div>
+    </div>
+}
+else
+{
+    <h4>Yorum yapabilmeniz için üye olmanız gerekmektedir.</h4>
+}
