@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <br />
+    <div class="alert alert-warning">
+        TEST MESAJI: BU YAZIYI GÖRÜYOR MUSUN?
+        <b id="statusLabel" style="color:red;">DEĞİŞMEDİ</b>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+    <script type="text/javascript">
+        // jQuery beklemeden direkt çalıştıralım
+        (function() {
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("http://localhost:5099/VisitorHub")
+                .build();
+
+            connection.start().then(() => {
+                console.log("Bağlantı Başarılı!");
+
+                // Saf JavaScript ile elemente ulaşalım
+                var el = document.getElementById("statusLabel");
+
+                if (el) {
+                    el.innerHTML = "BAĞLANTI KURULDU";
+                    el.style.color = "green";
+                } else {
+                    // Eğer element bulunamazsa konsola dev bir hata yazalım
+                    console.error("DİKKAT: 'statusLabel' id'li element sayfada yok!");
+                }
+            }).catch((err) => {
+                console.error("Hata: ", err.toString());
+            });
+        })();
+    </script>
+}
