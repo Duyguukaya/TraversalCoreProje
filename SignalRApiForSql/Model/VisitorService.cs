@@ -26,7 +26,7 @@ namespace SignalRApiForSql.Model
         {
             await _context.Visitors.AddAsync(visitor);
             await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("CallVisitList", "aaa");
+            await _hubContext.Clients.All.SendAsync("ReceiveVisitorList", GetVisitorChartList());
         }
 
         public List<VisitorChart> GetVisitorChartList()
@@ -34,7 +34,7 @@ namespace SignalRApiForSql.Model
             List<VisitorChart> visitorCharts = new List<VisitorChart>();
             using (var command = _context.Database.GetDbConnection().CreateCommand())
             {
-                command.CommandText = "select * from crosstab ('select VisitDate,City,CityVisitCount from Visitors Order By 1,2') as ct(VisitDate date,city1 int,city2 int,city3 int,city4 int,city5 int);";
+                command.CommandText = "select tarih,[1],[2],[3],[4],[5] from (select[City],CityVisitCount,CAST([VisitDate] as Date) as tarih from Visitors) as visitTable Pivot (Sum(CityVisitCount) for City in([1],[2],[3],[4],[5])) as pivotTable Order by tarih asc";
                 command.CommandType = CommandType.Text;
                 _context.Database.OpenConnection();
                 using (var reader = command.ExecuteReader())
@@ -45,9 +45,15 @@ namespace SignalRApiForSql.Model
                         visitorChart.VisitDate = reader.GetDateTime(0).ToShortDateString();
                         Enumerable.Range(1, 5).ToList().ForEach(x =>
                         {
-                            visitorChart.Counts.Add(reader.GetInt32(x));
+                            if (reader.IsDBNull(x))
+                            {
+                                visitorChart.Counts.Add(0); 
+                            }
+                            else
+                            {
+                                visitorChart.Counts.Add(reader.GetInt32(x)); 
+                            }
                         });
-
                         visitorCharts.Add(visitorChart);
                     }
                 }
