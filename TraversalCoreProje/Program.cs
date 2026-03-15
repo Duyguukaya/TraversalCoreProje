@@ -1,14 +1,14 @@
 using BusinessLayer.Container;
 using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
-using FluentValidation; // Eklendi
+using FluentValidation; 
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using TraversalCoreProje.Models;
 using BusinessLayer.ValidationRule.AnnouncementValidationRules;
 using TraversalCoreProje.CQRS.Handlers.DestinationHandlers;
-using MediatR; // Validator'ýn bulunduðu klasör
+using MediatR; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,15 +40,14 @@ builder.Services.CustomValidator();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-// --- FLUENT VALIDATION MODERN YAPILANDIRMA ---
-// 1. Validator'larý sisteme kaydediyoruz (AnnouncementUpdateValidator üzerinden tüm assembly taranýr)
+
 builder.Services.AddValidatorsFromAssemblyContaining<AnnouncementUpdateValidator>();
 
-// 2. Eskimiþ olan .AddFluentValidation() yerine yeni servisleri ekliyoruz
+
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 
-// 3. Buradaki .AddFluentValidation() kýsmýný sildik, sadece standart metod kaldý
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddMvc(config =>
@@ -68,7 +67,7 @@ var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
 var path = Directory.GetCurrentDirectory();
 loggerFactory.AddFile($"{path}\\Logs\\Log1.txt");
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
