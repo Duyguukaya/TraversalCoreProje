@@ -5,33 +5,182 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h2>Geçmiş Rezervasyonlarım</h2>
-
-@if(Model!=null && Model.Any()){
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>#</th>
-        <th>Lokasyon</th>
-        <th>Kişi Sayısı</th>
-        <th>Rezervasyon Tarihi</th>
-        <th>Durum</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.ReservationId</td>
-            <td>@item.Destination.City</td>
-            <td>@item.PersonCount</td>
-            <td>@item.ReservationDate</td>
-            <td>@item.Status</td>
-        </tr>
-    }
-    </table>
-}
-else
-{
-    <div class="alert alert-warning">
-        Henüz geçmiş bir rezervasyonunuz bulunmamaktadır.
+<div class="container-fluid py-5 px-md-5">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">Geçmiş Rezervasyonlarım</h2>
+                <p class="text-muted">Tamamladığınız tüm seyahatlerin detaylarına buradan ulaşabilirsiniz.</p>
+            </div>
+            <div class="stats-badge p-3 bg-white shadow-sm rounded-4 border d-none d-md-flex align-items-center">
+                <div class="icon-circle-small bg-primary-soft text-primary me-3">
+                    <i class="fas fa-history"></i>
+                </div>
+                <div>
+                    <small class="text-muted d-block">Toplam Kayıt</small>
+                    <span class="fw-bold">@(Model?.Count ?? 0) Seyahat</span>
+                </div>
+            </div>
+        </div>
     </div>
-}
 
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 custom-table">
+                        <thead class="bg-light text-secondary text-uppercase font-size-xs">
+                            <tr>
+                                <th class="ps-4 py-3">#</th>
+                                <th>Rota / Lokasyon</th>
+                                <th class="text-center">Kişi Sayısı</th>
+                                <th>Tarih</th>
+                                <th>Durum</th>
+                                <th class="text-end pe-4">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold text-muted">#@item.ReservationId</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="destination-icon me-3">
+                                                <i class="fas fa-map-marker-alt text-danger"></i>
+                                            </div>
+                                            <div>
+                                                <span class="fw-bold text-dark d-block">@item.Destination.City</span>
+                                                <small class="text-muted">Seyahat Tamamlandı</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-soft-info text-info px-3 py-2 rounded-pill">
+                                            <i class="fas fa-users me-1"></i> @item.PersonCount Kişi
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <span class="fw-medium text-dark">@item.ReservationDate.ToString("dd MMM yyyy")</span>
+                                            <small class="text-muted">@item.ReservationDate.ToString("HH:mm")</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var statusClass = item.Status == "Onaylandı" ? "bg-success" :
+                                            item.Status == "İptal Edildi" ? "bg-danger" : "bg-secondary";
+                                        }
+                                        <span class="badge @statusClass bg-opacity-10 text-@statusClass.Replace("bg-", "") px-3 py-2 rounded-pill fw-bold">
+                                            <i class="fas fa-circle font-size-xs me-1"></i> @item.Status
+                                        </span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <button class="btn btn-sm btn-light border rounded-3 hover-shadow">
+                                            <i class="fas fa-info-circle text-primary"></i> Detay
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076432.png" alt="Boş" style="width: 120px;" class="opacity-50 mb-3">
+                    <h5 class="fw-bold text-dark">Henüz geçmiş bir kaydınız yok.</h5>
+                    <p class="text-muted">Yeni bir serüvene atılmak için rezervasyon yapabilirsiniz.</p>
+                    <a href="/Member/Reservation/NewReservation" class="btn btn-primary rounded-pill px-4 shadow-sm mt-2">
+                        Hemen Planla
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #1e3c72;
+            --soft-bg: #f8f9fa;
+        }
+
+        body {
+            background-color: #f4f7f6;
+        }
+
+        /* Tablo Stilleri */
+        .custom-table thead th {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .custom-table tbody tr {
+            transition: all 0.2s ease;
+        }
+
+            .custom-table tbody tr:hover {
+                background-color: #fcfdfe !important;
+                transform: scale(1.002);
+                box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+            }
+
+        /* İkon Daireleri */
+        .icon-circle-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-primary-soft {
+            background-color: rgba(30, 60, 114, 0.1);
+        }
+
+        .destination-icon {
+            width: 35px;
+            height: 35px;
+            background: #fff5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Badge Renkleri */
+        .bg-soft-info {
+            background-color: rgba(13, 202, 240, 0.1);
+        }
+
+        .text-info {
+            color: #0dcaf0 !important;
+        }
+
+        .font-size-xs {
+            font-size: 0.6rem !important;
+            vertical-align: middle;
+        }
+
+        /* Genel */
+        .rounded-4 {
+            border-radius: 1rem !important;
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .font-size-xs {
+            font-size: 0.75rem;
+        }
+    </style>
+}

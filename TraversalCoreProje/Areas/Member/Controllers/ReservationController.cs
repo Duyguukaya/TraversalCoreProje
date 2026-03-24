@@ -57,14 +57,44 @@ namespace TraversalCoreProje.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewReservation(Reservation p)
+        public async Task<IActionResult> NewReservation(Reservation p)
         {
-            p.AppUserId = 8;
-            p.Status = "Onay Bekliyor";
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            reservationManager.TAdd(p);
+            if (user != null)
+            {
+                p.AppUserId = user.Id;
 
-            return RedirectToAction("MyCurrentReservation");
+                // Tarih Kontrolü: Girilen tarih şu anki zamandan küçük mü?
+                if (p.ReservationDate < System.DateTime.Now)
+                {
+                    // Eğer tarih geçmişse
+                    p.Status = "Geçmiş Rezervasyon"; // Veya veritabanındaki karşılığına göre "Tamamlandı"
+                    reservationManager.TAdd(p);
+
+                    // Geçmiş Rezervasyonlarım sayfasına yönlendiriyoruz
+                    return RedirectToAction("MyOldReservation");
+                }
+                else
+                {
+                    // Eğer tarih gelecek bir tarihse
+                    p.Status = "Onay Bekliyor";
+                    reservationManager.TAdd(p);
+
+                    // Onay Bekleyenler veya Aktif Rezervasyonlar sayfasına yönlendiriyoruz
+                    return RedirectToAction("MyApprovalReservation");
+                }
+            }
+
+            // Kullanıcı oturumu düşmüşse dropdown'ı tekrar doldur ve sayfaya dön
+            List<SelectListItem> values = (from x in destinationManager.TGetList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.City,
+                                               Value = x.DestinationId.ToString()
+                                           }).ToList();
+            ViewBag.v = values;
+            return View(p);
         }
     }
 }

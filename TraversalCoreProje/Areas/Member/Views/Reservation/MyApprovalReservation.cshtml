@@ -5,33 +5,154 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h2>Onay Bekleyen Rezervasyonlarım</h2>
-
-@if (Model != null && Model.Any())
-{
-    <table class="table table-bordered table-hover">
-        <tr>
-            <th>#</th>
-            <th>Lokasyon</th>
-            <th>Kişi Sayısı</th>
-            <th>Rezervasyon Tarihi</th>
-            <th>Durum</th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ReservationId</td>
-                <td>@item.Destination.City</td>
-                <td>@item.PersonCount</td>
-                <td>@item.ReservationDate</td>
-                <td>@item.Status</td>
-            </tr>
-        }
-    </table>
-}
-else
-{
-    <div class="alert alert-warning">
-        Henüz onay bekleyen bir rezervasyonunuz bulunmamaktadır.
+<div class="container-fluid py-5 px-md-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-2">
+                <div class="status-pulse me-3"></div>
+                <h2 class="fw-bold text-dark m-0">Onay Bekleyen Talepler</h2>
+            </div>
+            <p class="text-muted">Rezervasyonlarınız inceleniyor. En kısa sürede size geri dönüş yapacağız.</p>
+        </div>
     </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 custom-approval-table">
+                        <thead class="bg-warning bg-opacity-10 text-warning-emphasis">
+                            <tr>
+                                <th class="ps-4 py-3">Talep No</th>
+                                <th>Hedef Rota</th>
+                                <th class="text-center">Kişi</th>
+                                <th>Planlanan Tarih</th>
+                                <th>Güncel Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-medium">#@item.ReservationId</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="loc-icon me-3">
+                                                <i class="fas fa-map-pin text-warning"></i>
+                                            </div>
+                                            <div>
+                                                <span class="fw-bold text-dark d-block">@item.Destination.City</span>
+                                                <small class="text-muted"><i class="fas fa-shield-halved me-1"></i> İnceleme Altında</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-light text-dark border rounded-pill px-3 py-2">
+                                            <i class="fas fa-user text-secondary me-1"></i> @item.PersonCount
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="date-box">
+                                            <span class="d-block fw-semibold">@item.ReservationDate.ToString("dd MMMM yyyy")</span>
+                                            <small class="text-muted">@item.ReservationDate.ToString("HH:mm")</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="spinner-grow spinner-grow-sm text-warning me-2" role="status"></span>
+                                            <span class="fw-bold text-warning-emphasis">@item.Status</span>
+                                        </div>
+                                    </td>
+                                  
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5 bg-white">
+                    <div class="empty-anim mx-auto mb-4">
+                        <i class="fas fa-hourglass-start fa-3x text-warning opacity-50"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Şu an bekleyen bir talebiniz yok.</h5>
+                    <p class="text-muted mb-4">Yeni bir macera planlamaya ne dersiniz?</p>
+                    <a href="/Member/Reservation/NewReservation" class="btn btn-warning text-white rounded-pill px-5 shadow-sm">
+                        <b>Yeni Bir Plan Yap</b>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            background-color: #fcfdfe;
+        }
+
+        /* Onay Bekliyor Pulse Efekti */
+        .status-pulse {
+            width: 12px;
+            height: 12px;
+            background-color: #ffc107;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(255, 193, 7, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @@keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+            }
+        }
+
+        .custom-approval-table thead th {
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-bottom: 2px solid #fff3cd;
+        }
+
+        .loc-icon {
+            width: 35px;
+            height: 35px;
+            background: #fffdf5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffeeba;
+        }
+
+        .date-box {
+            padding-left: 5px;
+            border-left: 3px solid #ffc107;
+        }
+
+        .rounded-4 {
+            border-radius: 1.2rem !important;
+        }
+
+        .hover-shadow:hover {
+            background: #f8f9fa;
+            transform: translateY(-1px);
+        }
+
+        /* Spinner Hızı */
+        .spinner-grow-sm {
+            animation-duration: 1.2s;
+        }
+    </style>
 }

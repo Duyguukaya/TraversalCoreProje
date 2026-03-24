@@ -5,56 +5,216 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h2>Yeni Rezervasyon Sayfası</h2>
+<div class="container-fluid py-5 px-md-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-9">
+            <div class="reservation-card border-0 shadow-lg mt-3">
 
-<form method="post">
-  @*   <div class="form-group">
-        @Html.Label("Lokasyon")
-        @Html.DropDownListFor(x => x.Destination, (List<SelectListItem>)ViewBag.v, new { @class = "form-control" })
-    </div> *@
-    <div class="form-group">
-        @Html.Label("Kişi Sayısı")
-        <input type="text" asp-for="PersonCount" class="form-control" />
-    </div>
-    <div class="form-group">
-        @Html.Label("Tarih")
-        <input type="date" asp-for="ReservationDate" class="form-control" />
-    </div>
-    <div class="form-group">
-        @Html.Label("Varsa Eklemek İstedikleriniz")
-        <textarea asp-for="Description" rows="3" class="form-control"></textarea>
-    </div>
-	<button class="btn btn-success">Rezervasyon Yap</button>
+                <div class="row g-0">
+                    <div class="col-md-4 header-section d-flex flex-column align-items-center justify-content-center text-white p-5 text-center">
+                        <div class="icon-circle mb-4">
+                            <i class="fas fa-map-marked-alt fa-3x"></i>
+                        </div>
+                        <h2 class="fw-bold">Yeni Bir Serüven</h2>
+                        <p class="opacity-75 mt-3">Hayalinizdeki tatil için bilgileri doldurmanız yeterli. Biz sizin için gerisini planlarız.</p>
+                        <div class="mt-4 pt-4 border-top border-white border-opacity-25 w-100 text-start">
+                            <small class="d-block mb-2"><i class="fas fa-check-circle me-2"></i> Güvenli Rezervasyon</small>
+                            <small class="d-block mb-2"><i class="fas fa-headset me-2"></i> 7/24 Destek</small>
+                            <small class="d-block"><i class="fas fa-shield-alt me-2"></i> En İyi Fiyat Garantisi</small>
+                        </div>
+                    </div>
 
-</form>
+                    <div class="col-md-8 card-body p-4 p-md-5 bg-white">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                            <h3 class="fw-bold text-dark m-0">Rezervasyon Bilgileri</h3>
+                            <span class="badge bg-light text-primary p-2 px-3 rounded-pill border">Adım 1/1</span>
+                        </div>
 
-<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="infoModalLabel">Önemli Bilgilendirme</h5>
+                        <form method="post" class="needs-validation">
+                            <div class="row g-4">
+                             
+                                <div class="col-12">
+                                    <label class="form-label custom-label">Gidilecek Yer / Lokasyon</label>
+                                    <div class="input-group-custom">
+                                        <i class="fas fa-location-dot input-icon"></i>
+                                        @* x.Destination yerine x.DestinationId yazıyoruz *@
+                                        @Html.DropDownListFor(x => x.DestinationId, (List<SelectListItem>)ViewBag.v, "Nereye gitmek istersiniz?", new { @class = "form-select custom-input", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label custom-label">Kişi Sayısı</label>
+                                    <div class="input-group-custom">
+                                        <i class="fas fa-users input-icon"></i>
+                                        <input type="number" asp-for="PersonCount" class="form-control custom-input" placeholder="Örn: 2" min="1" />
+                                    </div>
+                                </div>
 
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="col-md-6">
+                                    <label class="form-label custom-label">Tercih Edilen Tarih</label>
+                                    <div class="input-group-custom">
+                                        <i class="fas fa-calendar-day input-icon"></i>
+                                        <input type="date" asp-for="ReservationDate" class="form-control custom-input" />
+                                    </div>
+                                </div>
 
+                                <div class="col-12">
+                                    <label class="form-label custom-label">Özel İstekleriniz ve Notlar</label>
+                                    <textarea asp-for="Description" rows="4" class="form-control custom-input pt-3" placeholder="Uçuş saati, otel tercihi veya özel diyet gereksinimleri gibi detayları buraya yazabilirsiniz..."></textarea>
+                                </div>
+
+                                <div class="col-12 mt-5">
+                                    <div class="row">
+                                        <div class="col-md-8 offset-md-4 text-end">
+                                            <button type="submit" class="btn btn-submit py-3 px-5 shadow-sm">
+                                                <span>Rezervasyonu Tamamla</span>
+                                                <i class="fas fa-paper-plane ms-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Rezervasyonunuzu oluştururken lütfen tüm alanları eksiksiz doldurduğunuzdan emin olun.</p>
-                <p>Tarih seçimleriniz, turlarımızın müsaitlik durumuna göre ayrıca onaylanacaktır.</p>
-                <p>Rezervasyon onay süreci ile ilgili lütfen güncel rezervasyonlarım menüsü üzerinden rezervasyonunuzu kontrol edin.</p>
-                <p>İyi tatiller dileriz!</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Anladım, Kapat</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 overflow-hidden shadow-2xl rounded-4">
+            <div class="modal-body p-0">
+                <div class="header-section p-4 text-center text-white">
+                    <i class="fas fa-info-circle fa-3x mb-3"></i>
+                    <h4 class="fw-bold">Hatırlatma</h4>
+                </div>
+                <div class="p-4">
+                    <div class="info-item mb-3">
+                        <i class="fas fa-check-circle text-success"></i>
+                        <span>Lütfen tüm alanların doğruluğunu kontrol edin.</span>
+                    </div>
+                    <div class="info-item mb-3">
+                        <i class="fas fa-envelope-open-text text-primary"></i>
+                        <span>Onay durumu e-posta adresinize gönderilecektir.</span>
+                    </div>
+                    <button type="button" class="btn btn-dark w-100 mt-4 py-3 rounded-3 fw-bold" data-bs-dismiss="modal">Anladım, Devam Et</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --input-bg: #fdfdfd;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reservation-card {
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .header-section {
+            background: var(--primary-gradient);
+            position: relative;
+        }
+
+        .icon-circle {
+            width: 90px;
+            height: 90px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .custom-label {
+            font-weight: 700;
+            color: #344767;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group-custom {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            color: #8392ab;
+            z-index: 10;
+            font-size: 1.1rem;
+        }
+
+        .custom-input {
+            background-color: var(--input-bg);
+            border: 1px solid #d2d6da;
+            padding: 14px 14px 14px 50px;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            color: #495057;
+        }
+
+            .custom-input:focus {
+                background-color: #fff;
+                border-color: #2a5298;
+                box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.1);
+                outline: none;
+            }
+
+        textarea.custom-input {
+            padding-left: 20px;
+        }
+
+        .btn-submit {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+            .btn-submit:hover {
+                transform: scale(1.03);
+                box-shadow: 0 12px 24px rgba(30, 60, 114, 0.25);
+                color: #fff;
+            }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1rem;
+            color: #495057;
+        }
+
+        /* Geniş ekran düzenlemeleri */
+        .container-fluid {
+            max-width: 1400px;
+        }
+    </style>
+
     <script type="text/javascript">
-        // Bu kod, sayfa tamamen yüklendikten sonra çalışır
         $(document).ready(function () {
-            // ID'si "infoModal" olan modal'ı (popup'ı) gösterir
             $('#infoModal').modal('show');
         });
     </script>

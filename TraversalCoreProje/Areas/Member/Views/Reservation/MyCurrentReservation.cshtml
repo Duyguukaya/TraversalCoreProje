@@ -5,36 +5,186 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-
-<h2>Aktif Rezervasyonlar</h2>
-
-@if(Model!=null && Model.Any()){
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>#</th>
-        <th>Lokasyon</th>
-        <th>Kişi Sayısı</th>
-        <th>Rezervasyon Tarihi</th>
-        <th>Durum</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.ReservationId</td>
-            <td>@item.Destination.City</td>
-            <td>@item.PersonCount</td>
-            <td>@item.ReservationDate</td>
-            <td>@item.Status</td>
-        </tr>
-    }
-    </table>
-
-}
-else
-{
-    <div class="alert alert-warning">
-        Henüz aktif bir rezervasyonunuz bulunmamaktadır.
+<div class="container-fluid py-5 px-md-5">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h2 class="fw-bold text-dark mb-1">
+                <i class="fas fa-route text-primary me-2"></i>Aktif Rezervasyonlarım
+            </h2>
+            <p class="text-muted">Yaklaşan seyahatlerinizi ve onaylanmış rotalarınızı buradan takip edebilirsiniz.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a href="/Member/Reservation/NewReservation" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                <i class="fas fa-plus me-2"></i>Yeni Rota Oluştur
+            </a>
+        </div>
     </div>
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 custom-table">
+                        <thead class="bg-primary text-white font-size-xs text-uppercase">
+                            <tr>
+                                <th class="ps-4 py-3 border-0">Kod</th>
+                                <th class="border-0">Destinasyon</th>
+                                <th class="text-center border-0">Gezgin Sayısı</th>
+                                <th class="border-0">Seyahat Tarihi</th>
+                                <th class="border-0">Durum</th>
+                                <th class="text-end pe-4 border-0">Yönet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <span class="badge bg-light text-dark border px-2 py-1">#@item.ReservationId</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="dest-avatar me-3">
+                                                <i class="fas fa-plane-arrival"></i>
+                                            </div>
+                                            <div>
+                                                <span class="fw-bold text-dark d-block">@item.Destination.City</span>
+                                                <small class="text-primary fw-medium"><i class="fas fa-globe-europe me-1"></i> Keşfetmeye Hazır</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="person-count-pill shadow-sm">
+                                            <i class="fas fa-user-friends me-1"></i> @item.PersonCount
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <span class="fw-bold text-dark"><i class="far fa-calendar-check me-1 text-success"></i> @item.ReservationDate.ToString("dd MMMM yyyy")</span>
+                                            <small class="text-muted ps-4">@item.ReservationDate.ToString("dddd")</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var statusColor = item.Status == "Onaylandı" ? "success" : "info";
+                                            var statusIcon = item.Status == "Onaylandı" ? "check-double" : "hourglass-half";
+                                        }
+                                        <div class="status-indicator shadow-sm bg-@statusColor">
+                                            <i class="fas fa-@statusIcon me-2"></i> @item.Status
+                                        </div>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="dropdown">
+                                            <button class="btn btn-light btn-sm rounded-circle shadow-sm" type="button" data-bs-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2 text-info"></i> Detaylar</a></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-times me-2"></i> İptal Talebi</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5 bg-white">
+                    <div class="empty-state-icon mx-auto mb-4">
+                        <i class="fas fa-suitcase-rolling fa-4x text-light"></i>
+                    </div>
+                    <h4 class="fw-bold text-dark">Şu an aktif bir seyahatiniz yok</h4>
+                    <p class="text-muted mb-4">Dünyayı keşfetmek için hala geç değil! Hemen bir rezervasyon yapın.</p>
+                    <a href="/Member/Reservation/NewReservation" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
+                        Hemen Plan Yap
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            background-color: #f8faff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Modern Tablo Özelleştirmeleri */
+        .custom-table tbody tr {
+            border-bottom: 1px solid #f0f4f8;
+            transition: all 0.3s ease;
+        }
+
+            .custom-table tbody tr:hover {
+                background-color: #f4f8ff;
+                transform: scale(1.005);
+            }
+
+        /* Destinasyon İkonu */
+        .dest-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Kişi Sayısı Pill */
+        .person-count-pill {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        /* Durum Göstergesi */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            border-radius: 30px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        /* Boş Durum İkonu */
+        .empty-state-icon {
+            width: 120px;
+            height: 120px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-primary {
+            background: linear-gradient(90deg, #1e3c72, #2a5298) !important;
+        }
+
+        .font-size-xs {
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .shadow-lg {
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.08) !important;
+        }
+    </style>
 }
-
-
