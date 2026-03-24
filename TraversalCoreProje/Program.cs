@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using TraversalCoreProje.Models;
 using BusinessLayer.ValidationRule.AnnouncementValidationRules;
 using TraversalCoreProje.CQRS.Handlers.DestinationHandlers;
-using MediatR; 
+using MediatR;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,11 +51,16 @@ builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddLocalization(opt =>
+{
+   opt.ResourcesPath = "Resources";
+});
+
 builder.Services.AddMvc(config =>
 {
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     config.Filters.Add(new AuthorizeFilter(policy));
-});
+}).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
 builder.Services.ConfigureApplicationCookie(config =>
 {
@@ -82,6 +88,13 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+var supportedCultures = new[] { "en", "tr", "fr", "es", "de" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[1])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
 
 app.MapControllerRoute(
     name: "areas",

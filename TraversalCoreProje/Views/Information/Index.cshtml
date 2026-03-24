@@ -1,0 +1,24 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="container-fluid py-5 px-md-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-2">
+                <div class="status-pulse me-3"></div>
+                <h2 class="fw-bold text-dark m-0">Çoklu Dil Desteği</h2>
+            </div>
+            <p class="text-muted">Rezervasyonlarınız inceleniyor. En kısa sürede size geri dönüş yapacağız.</p>
+        </div>
+    </div>
+
+    <div class="card-content collapse show">
+        <div class="card-body">
+            <p class="card-text">@Localizer["Merhaba"] @Localizer["Bugün"] @Localizer["Hava"] @Localizer["Çok"] @Localizer["Güzel"] @Localizer["Bize"] @Localizer["Ulaşın"].</p>
+        </div>
+    </div>
+    </div>
+
