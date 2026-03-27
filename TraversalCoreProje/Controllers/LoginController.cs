@@ -60,23 +60,39 @@ namespace TraversalCoreProje.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public IActionResult SignIn(UserSignInViewModel model)
+        public async Task<IActionResult> SignIn(UserSignInViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = _signInManager.PasswordSignInAsync(model.username, model.password, false, false).Result;
+                var result = await _signInManager.PasswordSignInAsync(model.username, model.password, false, false);
+
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Profile", new { area = "Member" });
+                    var user = await _userManager.FindByNameAsync(model.username);
+
+                    var roles = await _userManager.GetRolesAsync(user);
+
+
+                    if (roles.Contains("Admin"))
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    }
+                    else if (roles.Contains("Member"))
+                    {
+                        return RedirectToAction("Index", "Profile", new { area = "Member" });
+                    }
+
+                    return RedirectToAction("Index", "Default");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Hatalı kullanıcı adı veya şifre");
                 }
             }
-
             return View();
         }
+
     }
 }
